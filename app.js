@@ -122,7 +122,7 @@ var pong = {
           if (y2 === false) {
             var c = new Challenge({
               state: "Proposed",
-              type: "Single",
+              type: "Singles",
               date: Date.now(),
               challenger: [challenger],
               challenged: [challenged]
@@ -402,7 +402,7 @@ var pong = {
               cb("Match has been recorded.");
             });
           }
-        } else if (nc.type === "Single") {
+        } else if (nc.type === "Singles") {
           if (user_name === nc.challenger[0]) {
             Player.update( {currentChallenge: nc._id}, {currentChallenge: null}, {multi: true}, function(err) {
               if (err) return handleError(err);
@@ -475,7 +475,7 @@ var pong = {
               cb("Match has been recorded.");
             });
           }
-        } else if (nc.type === "Single") {
+        } else if (nc.type === "Singles") {
           if (user_name === nc.challenged[0]) {
             Player.update( {currentChallenge: nc._id}, {currentChallenge: null}, {multi: true}, function(err) {
               if (err) return handleError(err);
@@ -609,7 +609,7 @@ app.post('/', function(req, res){
                     res.json({text: m});
                   }
                 });
-              } else if (params[2] == "single") {
+              } else if (params[2] == "singles") {
                 pong.findPlayer(params[3], function(user) {
                   if (user) {
                     pong.createSingleChallenge(hook.user_name, params[3], function(m) {
@@ -624,7 +624,7 @@ app.post('/', function(req, res){
                   }
                 });
               } else {
-                message = "Invalid params. 'pongbot challenge _<single|doubles> <opponent|teammate>_ against _<opponent> <opponent>_ '";
+                message = "Invalid params. 'pongbot challenge _<singles|doubles> <opponent|teammate>_ against _<opponent> <opponent>_ '";
                 res.json({text: message});
               }
             } else if (user === false) {

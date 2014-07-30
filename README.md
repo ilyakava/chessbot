@@ -14,7 +14,7 @@ If singles:
 
 
 ```
-pongbot challenge single <opponent's name>
+pongbot challenge singles <opponent's name>
 ```
 
 If doubles:
