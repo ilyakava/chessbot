@@ -752,5 +752,10 @@ app.get('/api/matches', function(req, res) {
   });
 });
 
+// up/down endpoint
+app.get('/api/system/ping', function(req, res) {
+  res.json({"ping": "pong"});
+});
+
 app.listen(process.env.PORT || 3000);
 console.log("Listening on port 3000!");
