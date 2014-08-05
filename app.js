@@ -565,7 +565,9 @@ var pong = {
       "https://i.chzbgr.com/maxW500/3841869568/h2814E598/",
       "http://24.media.tumblr.com/4e71f3df088eefed3d08ce4ce34e8d62/tumblr_mhyjqdJZ1g1s3r24zo1_500.gif",
       "http://i.imgur.com/P5LVOmg.gif",
-      "http://i.imgur.com/SqF0q3h.gif"
+      "http://i.imgur.com/SqF0q3h.gif",
+      "http://i.imgur.com/CvUl6jj.gif",
+      "http://i.imgur.com/FH4GErU.gif"
     ]
     var rand = gifs[Math.floor(Math.random() * gifs.length)];
     cb(rand);
