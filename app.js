@@ -131,7 +131,7 @@ var pong = {
               if (err) return new Error(err);
               pong.setChallenge(challenger, nc._id);
               pong.setChallenge(challenged, nc._id);
-              message = "You've challenged " + challenged + " to a ping pong match!";
+              message = challenger + " has challenged " + challenged + " to a ping pong match!";
               console.log(nc);
               cb(message);
             });
@@ -168,7 +168,7 @@ var pong = {
                         pong.setChallenge(c2, nc._id);
                         pong.setChallenge(c3, nc._id);
                         pong.setChallenge(c4, nc._id);
-                        message = "You and " + c2 + " have challenged " + c3 + " and " + c4 + " to a ping pong match!";
+                        message = c1 + " and " + c2 + " have challenged " + c3 + " and " + c4 + " to a ping pong match!";
                         cb(message);
                       });
                   } else {
