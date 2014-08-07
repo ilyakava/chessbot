@@ -554,13 +554,8 @@ var pong = {
       }
     });
   },
-  getRankings: function(players){
-    var rank = 1;
-    var totalPlayers = "";
-    players.forEach(function(player, i){
-      var playerstring = rank + ". " + player.user_name + " | " + pluralize('win', player.wins, true) + " " + pluralize('loss', player.losses, true) + "\n";
-      totalPlayers += playerstring;
-    })
+  userToS: function(user){
+    return user.user_name + ": " + pluralize('win', user.wins, true) + " " + pluralize('loss', user.losses, true);
   },
   getDuelGif: function(cb) {
     var gifs = [
@@ -676,7 +671,7 @@ app.post('/', function(req, res){
           var usertosearch = params[2] || hook.user_name;
           pong.findPlayer(usertosearch, function(user){
             if (user) {
-              message = user.user_name + ": " + user.wins + " wins, " + user.losses + " losses. Elo: " + user.elo;
+              message = pong.userToS(user);
             } else if (user === false) {
               message = "Could not find a player with that name."
             }
@@ -684,11 +679,23 @@ app.post('/', function(req, res){
           });
           break;
       case "leaderboard":
-          var topN = params[2] || 5;
-          Player.find({"$or":[{"wins":{"$ne":0}},{"losses":{"$ne":0}}]}).sort({'elo': 'descending', 'wins': 'descending'}).limit(topN).find( function(err, players) {
+          var topN = parseFloat(params[2]) || 5;
+          var paramError = "Invalid params. 'pongbot leaderboard <1-Infinity>'"
+          if (!(topN > 0)) { res.json({text: paramError}); }
+          var criteria = {"$or":[{"wins":{"$ne":0}},{"losses":{"$ne":0}}]};
+          var sort = {'elo': 'descending', 'wins': 'descending'};
+          Player.find(criteria).sort(sort).limit(topN).find( function(err, players) {
             if (err) return handleError(err);
-            var totalPlayers = pong.getRankings(players);
-            res.json({text: totalPlayers});
+            var tieCounter = 0;
+            var out = " 1. " + pong.userToS(players[0]) + "\n";
+            for (var i=1;i<players.length;i++) {
+              var rankStr;
+              if (players[i].elo == players[i - 1].elo) { tieCounter += 1; } else { tieCounter = 0; };
+              rank = i + 1 - tieCounter;
+              if (tieCounter > 0) { rankStr = "(" + rank + ") "; } else { rankStr = " " + rank + ". " };
+              out += rankStr + pong.userToS(players[i]) + "\n";
+            }
+            res.json({text: out});
           });
           break;
       case "reset":
@@ -722,7 +729,7 @@ app.post('/', function(req, res){
     	}
     }
 });
-
+// @todo think about deleting these since they seem to be inaccessible from the regular webhooks integration
 app.post('/commands', function(req, res){
   console.log("Got a post from " + req.body.user_name);
       switch(req.body.command) {
