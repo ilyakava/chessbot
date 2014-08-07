@@ -20,6 +20,7 @@
 var express = require('express')
 ,   bodyParser = require('body-parser')
 ,   mongoose = require('mongoose')
+,   pluralize = require('pluralize')
 ,   request = require('request')
 ,   Schema = mongoose.Schema;
 
@@ -553,6 +554,14 @@ var pong = {
       }
     });
   },
+  getRankings: function(players){
+    var rank = 1;
+    var totalPlayers = "";
+    players.forEach(function(player, i){
+      var playerstring = rank + ". " + player.user_name + " | " + pluralize('win', player.wins, true) + " " + pluralize('loss', player.losses, true) + "\n";
+      totalPlayers += playerstring;
+    })
+  },
   getDuelGif: function(cb) {
     var gifs = [
       "http://i235.photobucket.com/albums/ee210/f4nt0mh43d/BadDuel.gif",
@@ -675,8 +684,12 @@ app.post('/', function(req, res){
           });
           break;
       case "leaderboard":
-          var message = "";
-          res.json({text: "https://files.slack.com/files-pri/T0250FYAY-F02DPP8FG/image003.gif"})
+          var topN = params[2] || 5;
+          Player.find({"$or":[{"wins":{"$ne":0}},{"losses":{"$ne":0}}]}).sort({'elo': 'descending', 'wins': 'descending'}).limit(topN).find( function(err, players) {
+            if (err) return handleError(err);
+            var totalPlayers = pong.getRankings(players);
+            res.json({text: totalPlayers});
+          });
           break;
       case "reset":
           var message = "";
