@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/ilyakava/pongbot.png?label=ready&title=Ready)](https://waffle.io/ilyakava/pongbot)
 ## Pongbot 0.9
 
 #Quickstart guide:
