@@ -22,7 +22,7 @@ describe("userToS", function(){
 
   it("prints a newly registered user correctly", function(done){
     var string = pong.userToS(currentUser)
-    string.should.equal("test: 0 wins 0 losses(elo: 0)");
+    string.should.equal("test: 0 wins 0 losses (elo: 0)");
     done();
   });
 });
@@ -40,7 +40,7 @@ describe("playersToS", function(){
 
   it("prints a leaderboard correctly", function(done){
     var string = pong.playersToS(sortedPlayers);
-    string.should.equal("1. best: 2 wins 0 losses(elo: 20)\n2. middle: 1 win 1 loss(elo: 10)\n3. worst: 0 wins 2 losses(elo: 0)\n");
+    string.should.equal("1. best: 2 wins 0 losses (elo: 20)\n2. middle: 1 win 1 loss (elo: 10)\n3. worst: 0 wins 2 losses (elo: 0)\n");
     done();
   });
 
@@ -49,7 +49,7 @@ describe("playersToS", function(){
     sortedPlayers = [sortedPlayers[0]].concat(sortedPlayers);
 
     var string = pong.playersToS(sortedPlayers);
-    string.should.equal("1. best: 2 wins 0 losses(elo: 20)\n1. best: 2 wins 0 losses(elo: 20)\n3. middle: 1 win 1 loss(elo: 10)\n4. worst: 0 wins 2 losses(elo: 0)\n4. worst: 0 wins 2 losses(elo: 0)\n");
+    string.should.equal("1. best: 2 wins 0 losses (elo: 20)\n1. best: 2 wins 0 losses (elo: 20)\n3. middle: 1 win 1 loss (elo: 10)\n4. worst: 0 wins 2 losses (elo: 0)\n4. worst: 0 wins 2 losses (elo: 0)\n");
     done();
   });
 });
