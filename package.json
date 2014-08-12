@@ -8,9 +8,13 @@
     "node-slack": "^0.0.3",
     "body-parser": "",
     "mongoose": "",
-    "request": ""
+    "request": "",
+    "pluralize": ""
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "mocha": "",
+    "should": ""
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
