@@ -53,3 +53,16 @@ describe("playersToS", function(){
     done();
   });
 });
+
+describe("getDuelGif", function(){
+  it("doesn't return the same gif 3 times in a row", function(done){
+    pong.getDuelGif(function(a){
+      pong.getDuelGif(function(b){
+        pong.getDuelGif(function(c){
+          (a == b && b == c).should.equal(false);
+          done();
+        })
+      })
+    })
+  });
+});
